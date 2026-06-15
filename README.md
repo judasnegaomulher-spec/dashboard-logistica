@@ -2,18 +2,63 @@
 
 ## Objetivo
 
-Este projeto foi desenvolvido para auxiliar gestores logísticos na identificação de atrasos em entregas, permitindo análises rápidas e suporte à tomada de decisão.
+Desenvolver uma solução visual para monitoramento de atrasos logísticos, permitindo que gestores identifiquem rapidamente gargalos operacionais, regiões críticas e transportadoras com baixo desempenho.
 
-## Funcionalidades
+---
 
-- Indicadores de desempenho (KPIs)
+## Problema
+
+A empresa depende de planilhas extensas e relatórios manuais para acompanhar suas entregas, dificultando:
+
+- Identificação de transportadoras com maior índice de atraso;
+- Visualização de regiões críticas;
+- Priorização das entregas mais problemáticas;
+- Acompanhamento de tendências operacionais;
+- Tomada de decisão em tempo real.
+
+---
+
+## Regra de Negócio
+
+Uma entrega é considerada atrasada quando:
+
+dias_reais > prazo_dias
+
+O atraso é calculado por:
+
+atraso = dias_reais - prazo_dias
+
+---
+
+## Funcionalidades do Dashboard
+
+### Indicadores (KPIs)
+
 - Total de entregas
 - Quantidade de entregas atrasadas
 - Percentual de atraso
-- Comparação entre transportadoras
-- Análise por região
+- Maior atraso registrado
+
+### Recursos Analíticos
+
+- Filtro por região
+- Filtro por transportadora
+- Gráfico de atrasos por transportadora
+- Gráfico de distribuição por região
 - Ranking das entregas mais críticas
-- Visualização gráfica interativa
+- Tabela dinâmica
+- Alertas automáticos
+- Priorização visual por cores
+
+### Classificação Visual
+
+🟢 Normal → sem atraso
+
+🟡 Atenção → atraso de até 5 dias
+
+🔴 Crítico → atraso superior a 5 dias
+
+---
 
 ## Tecnologias Utilizadas
 
@@ -23,20 +68,36 @@ Este projeto foi desenvolvido para auxiliar gestores logísticos na identificaç
 - Chart.js
 - GitHub Pages
 
+---
+
 ## Processo de Construção
 
-1. Organização dos dados logísticos.
-2. Criação dos indicadores principais.
-3. Desenvolvimento dos gráficos de comparação.
-4. Construção do ranking de prioridades.
-5. Publicação no GitHub Pages.
+1. Organização dos dados fornecidos.
+2. Aplicação da regra de negócio para cálculo dos atrasos.
+3. Construção dos indicadores principais.
+4. Desenvolvimento dos gráficos de apoio à decisão.
+5. Criação de filtros para análise interativa.
+6. Implementação de alertas visuais.
+7. Publicação via GitHub Pages.
 
-## Como acessar
+---
 
-Link do dashboard:
+## Resultados Obtidos
 
-https://SEU-USUARIO.github.io/dashboard-logistica/
+O dashboard permite:
 
-## Conclusão
+- Identificar rapidamente transportadoras problemáticas;
+- Detectar regiões com maior incidência de atraso;
+- Priorizar entregas críticas;
+- Apoiar decisões operacionais;
+- Melhorar a visibilidade dos indicadores logísticos.
 
-A solução permite identificar rapidamente regiões críticas, transportadoras com maior índice de atraso e entregas prioritárias, facilitando a tomada de decisão operacional em tempo real.
+---
+
+## Link do Dashboard
+
+Inserir aqui o link do GitHub Pages após a publicação.
+
+Exemplo:
+
+https://seuusuario.github.io/dashboard-logistica/
