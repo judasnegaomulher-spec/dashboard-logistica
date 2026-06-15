@@ -11,224 +11,103 @@ const dados = [
 { id:310, transportadora:"ViaCargo", regiao:"Nordeste", prazo:4, real:8 }
 ];
 
-let chartTransportadoras;
-let chartRegioes;
-let chartRanking;
+const atrasadas = dados.filter(item => item.real > item.prazo);
 
-const filtroRegiao = document.getElementById("filtroRegiao");
-const filtroTransportadora = document.getElementById("filtroTransportadora");
-
-popularFiltros();
-atualizarDashboard();
-
-filtroRegiao.addEventListener("change", atualizarDashboard);
-filtroTransportadora.addEventListener("change", atualizarDashboard);
-
-function popularFiltros(){
-
-const regioes = [...new Set(dados.map(d => d.regiao))];
-const transportadoras = [...new Set(dados.map(d => d.transportadora))];
-
-regioes.forEach(r=>{
-filtroRegiao.innerHTML += `<option value="${r}">${r}</option>`;
-});
-
-transportadoras.forEach(t=>{
-filtroTransportadora.innerHTML += `<option value="${t}">${t}</option>`;
-});
-
-}
-
-function atualizarDashboard(){
-
-const regiaoSelecionada = filtroRegiao.value;
-const transportadoraSelecionada = filtroTransportadora.value;
-
-const filtrado = dados.filter(item => {
-
-const filtro1 =
-regiaoSelecionada === "Todos" ||
-item.regiao === regiaoSelecionada;
-
-const filtro2 =
-transportadoraSelecionada === "Todos" ||
-item.transportadora === transportadoraSelecionada;
-
-return filtro1 && filtro2;
-
-});
-
-const atrasadas = filtrado.filter(
-d => d.real > d.prazo
-);
-
-const percentual =
-filtrado.length > 0
-? ((atrasadas.length / filtrado.length) * 100).toFixed(1)
-: 0;
-
-const maiorAtraso =
-atrasadas.length > 0
-? Math.max(...atrasadas.map(d => d.real - d.prazo))
-: 0;
-
-document.getElementById("totalEntregas").textContent =
-filtrado.length;
-
-document.getElementById("entregasAtrasadas").textContent =
-atrasadas.length;
+document.getElementById("totalEntregas").textContent = dados.length;
+document.getElementById("entregasAtrasadas").textContent = atrasadas.length;
 
 document.getElementById("percentualAtraso").textContent =
-percentual + "%";
+((atrasadas.length / dados.length) * 100).toFixed(1) + "%";
+
+const maiorAtraso = Math.max(
+...atrasadas.map(item => item.real - item.prazo)
+);
 
 document.getElementById("maiorAtraso").textContent =
 maiorAtraso + " dias";
 
-const status = document.getElementById("statusOperacional");
+const tabela = document.getElementById("tabelaEntregas");
 
-if(percentual >= 60){
-status.innerHTML = "🔴 Situação Crítica";
-}
-else if(percentual >= 30){
-status.innerHTML = "🟡 Atenção Operacional";
-}
-else{
-status.innerHTML = "🟢 Operação Controlada";
-}
+dados.forEach(item => {
 
-montarTabela(filtrado);
-gerarGraficoTransportadoras(atrasadas);
-gerarGraficoRegioes(atrasadas);
-gerarRanking(atrasadas);
+    const atraso = item.real - item.prazo;
 
-}
+    let classe = "normal";
 
-function montarTabela(lista){
+    if(atraso > 5){
+        classe = "critico";
+    }
+    else if(atraso > 0){
+        classe = "atencao";
+    }
 
-const tabela =
-document.getElementById("tabelaEntregas");
-
-tabela.innerHTML = "";
-
-lista.forEach(item=>{
-
-const atraso = item.real - item.prazo;
-
-let classe = "normal";
-
-if(atraso > 5){
-classe = "critico";
-}
-else if(atraso > 0){
-classe = "atencao";
-}
-
-tabela.innerHTML += `
-<tr class="${classe}">
-<td>${item.id}</td>
-<td>${item.transportadora}</td>
-<td>${item.regiao}</td>
-<td>${item.prazo}</td>
-<td>${item.real}</td>
-<td>${atraso > 0 ? "+"+atraso : atraso}</td>
-</tr>
-`;
-
+    tabela.innerHTML += `
+    <tr class="${classe}">
+        <td>${item.id}</td>
+        <td>${item.transportadora}</td>
+        <td>${item.regiao}</td>
+        <td>${item.prazo}</td>
+        <td>${item.real}</td>
+        <td>${atraso}</td>
+    </tr>
+    `;
 });
 
-}
+const transportadoras = {};
 
-function gerarGraficoTransportadoras(atrasadas){
-
-const contador = {};
-
-atrasadas.forEach(item=>{
-contador[item.transportadora] =
-(contador[item.transportadora] || 0) + 1;
+atrasadas.forEach(item => {
+    transportadoras[item.transportadora] =
+    (transportadoras[item.transportadora] || 0) + 1;
 });
 
-if(chartTransportadoras){
-chartTransportadoras.destroy();
-}
-
-chartTransportadoras = new Chart(
+new Chart(
 document.getElementById("graficoTransportadoras"),
 {
-type:"bar",
-data:{
-labels:Object.keys(contador),
-datasets:[{
-label:"Entregas Atrasadas",
-data:Object.values(contador)
-}]
-},
-options:{
-responsive:true
-}
-}
-);
-
-}
-
-function gerarGraficoRegioes(atrasadas){
-
-const contador = {};
-
-atrasadas.forEach(item=>{
-contador[item.regiao] =
-(contador[item.regiao] || 0) + 1;
+    type:"bar",
+    data:{
+        labels:Object.keys(transportadoras),
+        datasets:[{
+            label:"Atrasos",
+            data:Object.values(transportadoras)
+        }]
+    }
 });
 
-if(chartRegioes){
-chartRegioes.destroy();
-}
+const regioes = {};
 
-chartRegioes = new Chart(
+atrasadas.forEach(item => {
+    regioes[item.regiao] =
+    (regioes[item.regiao] || 0) + 1;
+});
+
+new Chart(
 document.getElementById("graficoRegioes"),
 {
-type:"doughnut",
-data:{
-labels:Object.keys(contador),
-datasets:[{
-data:Object.values(contador)
-}]
-}
-}
+    type:"doughnut",
+    data:{
+        labels:Object.keys(regioes),
+        datasets:[{
+            data:Object.values(regioes)
+        }]
+    }
+});
+
+const ranking = [...atrasadas].sort(
+(a,b)=>(b.real-b.prazo)-(a.real-a.prazo)
 );
 
-}
-
-function gerarRanking(atrasadas){
-
-const ranking = [...atrasadas]
-.sort((a,b)=>
-(b.real-b.prazo) -
-(a.real-a.prazo)
-);
-
-if(chartRanking){
-chartRanking.destroy();
-}
-
-chartRanking = new Chart(
+new Chart(
 document.getElementById("graficoRanking"),
 {
-type:"bar",
-data:{
-labels: ranking.map(
-i => "Entrega " + i.id
-),
-datasets:[{
-label:"Dias de Atraso",
-data: ranking.map(
-i => i.real - i.prazo
-)
-}]
-},
-options:{
-indexAxis:'y'
-}
-}
-);
-
-}
+    type:"bar",
+    data:{
+        labels: ranking.map(item => "Entrega " + item.id),
+        datasets:[{
+            label:"Dias de atraso",
+            data: ranking.map(item => item.real-item.prazo)
+        }]
+    },
+    options:{
+        indexAxis:"y"
+    }
+});
