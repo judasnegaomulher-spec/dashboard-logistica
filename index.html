@@ -30,7 +30,6 @@
     <main class="content">
 
         <header>
-
             <h1>Dashboard Inteligente de Monitoramento Logístico</h1>
 
             <p>
@@ -38,29 +37,24 @@
                 desempenho das transportadoras e apoio à tomada
                 de decisão em tempo real.
             </p>
-
         </header>
 
         <section class="filtros">
 
             <div class="filtro-box">
-
-                <label>Filtrar por Região</label>
+                <label for="filtroRegiao">Filtrar por Região</label>
 
                 <select id="filtroRegiao">
                     <option value="Todos">Todas as Regiões</option>
                 </select>
-
             </div>
 
             <div class="filtro-box">
-
-                <label>Filtrar por Transportadora</label>
+                <label for="filtroTransportadora">Filtrar por Transportadora</label>
 
                 <select id="filtroTransportadora">
                     <option value="Todos">Todas as Transportadoras</option>
                 </select>
-
             </div>
 
         </section>
@@ -95,7 +89,6 @@
                 <h3>🚨 Alertas Automáticos</h3>
 
                 <ul id="listaAlertas"></ul>
-
             </div>
 
         </section>
@@ -135,7 +128,6 @@
             <table>
 
                 <thead>
-
                     <tr>
                         <th>ID</th>
                         <th>Transportadora</th>
@@ -145,12 +137,9 @@
                         <th>Atraso</th>
                         <th>Prioridade</th>
                     </tr>
-
                 </thead>
 
-                <tbody id="tabelaAtrasos">
-
-                </tbody>
+                <tbody id="tabelaAtrasos"></tbody>
 
             </table>
 
