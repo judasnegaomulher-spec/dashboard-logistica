@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Inteligente de Monitoramento Logístico</title>
+    <title>Dashboard Logístico</title>
 
     <link rel="stylesheet" href="style.css">
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
 
     <aside class="sidebar">
-
         <h2>📦 Logística</h2>
 
         <ul>
@@ -24,7 +21,6 @@
             <li>Entregas</li>
             <li>Indicadores</li>
         </ul>
-
     </aside>
 
     <main class="content">
@@ -33,16 +29,14 @@
             <h1>Dashboard Inteligente de Monitoramento Logístico</h1>
 
             <p>
-                Monitoramento de atrasos, regiões críticas,
-                desempenho das transportadoras e apoio à tomada
-                de decisão em tempo real.
+                Monitoramento de atrasos, regiões críticas e desempenho das transportadoras.
             </p>
         </header>
 
         <section class="filtros">
 
             <div class="filtro-box">
-                <label for="filtroRegiao">Filtrar por Região</label>
+                <label for="filtroRegiao">Região</label>
 
                 <select id="filtroRegiao">
                     <option value="Todos">Todas as Regiões</option>
@@ -50,7 +44,7 @@
             </div>
 
             <div class="filtro-box">
-                <label for="filtroTransportadora">Filtrar por Transportadora</label>
+                <label for="filtroTransportadora">Transportadora</label>
 
                 <select id="filtroTransportadora">
                     <option value="Todos">Todas as Transportadoras</option>
@@ -101,7 +95,7 @@
             </div>
 
             <div class="grafico-card">
-                <h3>Distribuição de Atrasos por Região</h3>
+                <h3>Atrasos por Região</h3>
                 <canvas id="graficoRegioes"></canvas>
             </div>
 
@@ -110,7 +104,7 @@
         <section class="graficos">
 
             <div class="grafico-card">
-                <h3>Ranking das Entregas Mais Críticas</h3>
+                <h3>Ranking das Entregas Críticas</h3>
                 <canvas id="graficoRanking"></canvas>
             </div>
 
@@ -145,32 +139,9 @@
 
         </section>
 
-        <section class="explicacao">
-
-            <h2>Lógica Utilizada</h2>
-
-            <p>
-                Uma entrega é considerada atrasada quando
-                <strong>dias_reais > prazo_dias</strong>.
-            </p>
-
-            <p>
-                O atraso é calculado por:
-                <strong>dias_reais - prazo_dias</strong>.
-            </p>
-
-            <p>
-                O dashboard prioriza automaticamente as entregas
-                mais críticas e destaca regiões e transportadoras
-                com maior incidência de atrasos.
-            </p>
-
-        </section>
-
     </main>
 
     <script src="script.js"></script>
 
 </body>
-
 </html>
